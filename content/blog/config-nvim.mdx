@@ -1,0 +1,61 @@
+---
+title: "config.nvim: Just another code editor to compliment my workflow"
+description: "An opinionated, modular Neovim configuration forked from kickstart.nvim, with Mason-managed LSPs, Treesitter, and Image Support."
+publishedAt: "2026-10-22"
+---
+
+# config.nvim: Just another code editor to compliment my workflow
+
+Neovim has been my favorite text editor for years, to the point the first thing I do on a brand new machine, server or desktop, was to install one.
+The favoritism against vim and its motion has become severe and a running joke among my friends, to the point it felt awkward editing anything with nano.
+It came to my attention that I had never written about my personal Neovim configuration, so push come to shove and I finally *completed* one.
+
+[config.nvim](https://github.com/BillyAddlers/config.nvim) is my personal Neovim configuration, forked from
+[kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim). While I'm trying to stay close to its upstream, I couldn't help but add a few of my own opinions and preferences. 
+I even went as far as to make it modular, which I then realized someone else already forked a modular version of it; you can check them [here](https://github.com/dam9000/kickstart-modular.nvim). I still prefer my own, though.
+
+![config.nvim screenshot](/blog/config-nvim/screenshot.webp)
+> The project shown is this blog's source code, which is written in React with Next.js
+
+## What's in it
+
+I've went through few iterations of my config, and I think I've finally reached a point where I can share it with the world. Here are some of the highlights:
+
+- **Modular layout.** Plugin specs live under `lua/plugins/`, so adding or removing a feature is
+  a one-file change instead of editing a giant `init.lua`.
+- **Mason-managed tooling.** LSP servers, debug adapters, and formatters are installed and kept
+  up to date by Mason, so a fresh machine gets to a working state with `:Lazy` and little else.
+- **Treesitter + Telescope.** Syntax highlighting and incremental selection through Treesitter,
+  fuzzy finding through Telescope with `ripgrep` for live grep.
+- **Formatting on save.** Conform/none-ls run `gofumpt`, `goimports`, `prettier`, `stylua`,
+  and friends so I never think about formatting.
+- **Pinned plugins where it matters.** `nvim-silicon` is pinned to a specific commit with a local
+  patch for a deprecated `vim.validate` call, so `:Lazy update` can't silently revert the fix.
+
+There might be more, but I think this is enough to get you started. The README has a full list of plugins and their purpose.
+And if you want to you can fork it yourself and make it your own. I won't be offended.
+
+## Installation
+
+The config targets the latest stable or nightly Neovim. The short version:
+
+```sh
+git clone https://github.com/BillyAddlers/config.nvim.git ~/.config/nvim
+nvim
+```
+
+Lazy (as the name implies) installs everything on first launch. The README also covers the external dependencies
+(ripgrep, a Nerd Font, ImageMagick for Markdown image previews, `tree-sitter-cli`, and so on)
+with per-OS install recipes.
+
+## Why fork kickstart
+
+kickstart.nvim is deliberately minimal: it ships a commented `init.lua` and expects you to grow
+it yourself. That is a great starting point, but I wanted a config I could clone onto a new
+machine and use immediately. 
+
+It's getting to the point where I thought to myself, "This repository strays too far from the upstream it can't be called a fork anymore."
+
+---
+
+[Back to the blog index](/blog)

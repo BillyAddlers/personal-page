@@ -1,26 +1,152 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@plugin "@tailwindcss/typography";
+@source not "../patches/**/*";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-quinacridone-magenta: #92374d;
+  --color-quinacridone-magenta-100: #1d0b0f;
+  --color-quinacridone-magenta-200: #3a161f;
+  --color-quinacridone-magenta-300: #57212e;
+  --color-quinacridone-magenta-400: #732c3e;
+  --color-quinacridone-magenta-500: #92374d;
+  --color-quinacridone-magenta-600: #bb4b67;
+  --color-quinacridone-magenta-700: #cc788d;
+  --color-quinacridone-magenta-800: #dda5b3;
+  --color-quinacridone-magenta-900: #eed2d9;
+
+  --color-space-cadet: #1b1f3b;
+  --color-space-cadet-100: #05060c;
+  --color-space-cadet-200: #0b0c18;
+  --color-space-cadet-300: #101324;
+  --color-space-cadet-400: #161930;
+  --color-space-cadet-500: #1b1f3b;
+  --color-space-cadet-600: #363d75;
+  --color-space-cadet-700: #515caf;
+  --color-space-cadet-800: #8b92ca;
+  --color-space-cadet-900: #c5c9e4;
+
+  --color-moonstone: #559cad;
+  --color-moonstone-100: #111f23;
+  --color-moonstone-200: #223f46;
+  --color-moonstone-300: #335e69;
+  --color-moonstone-400: #447e8c;
+  --color-moonstone-500: #559cad;
+  --color-moonstone-600: #78b0be;
+  --color-moonstone-700: #9ac4ce;
+  --color-moonstone-800: #bcd8df;
+  --color-moonstone-900: #ddebef;
+
+  --color-celadon: #a8c69f;
+  --color-celadon-100: #1f2d1b;
+  --color-celadon-200: #3e5936;
+  --color-celadon-300: #5d8650;
+  --color-celadon-400: #80ab73;
+  --color-celadon-500: #a8c69f;
+  --color-celadon-600: #bad1b3;
+  --color-celadon-700: #cbddc6;
+  --color-celadon-800: #dce8d9;
+  --color-celadon-900: #eef4ec;
+
+  --color-fairy-tale: #e1bbc9;
+  --color-fairy-tale-100: #391925;
+  --color-fairy-tale-200: #73324a;
+  --color-fairy-tale-300: #ac4c6f;
+  --color-fairy-tale-400: #c8829c;
+  --color-fairy-tale-500: #e1bbc9;
+  --color-fairy-tale-600: #e7c9d4;
+  --color-fairy-tale-700: #edd7df;
+  --color-fairy-tale-800: #f3e4ea;
+  --color-fairy-tale-900: #f9f2f4;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+/* Theme changes use a circular reveal from the floating theme button.
+   The old page stays underneath while the new snapshot is clipped open. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(root) {
+  animation: none;
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+/* The overlay captures pointer events while a reveal runs, which would drop
+   clicks. Let them reach the live page instead. */
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans);
+}
+
+/* Backdrop layers for components/page-backdrop.tsx. Palette-tinted washes,
+   deliberately low-chroma so the hero visual stays the focal point. */
+.page-backdrop__gradient {
+  background:
+    radial-gradient(55% 45% at 82% 8%, rgb(85 156 173 / 0.16), transparent 70%),
+    radial-gradient(45% 40% at 12% 0%, rgb(225 187 201 / 0.22), transparent 70%),
+    linear-gradient(to bottom, #ffffff, #f3f6f7);
+}
+
+.dark .page-backdrop__gradient {
+  background:
+    radial-gradient(55% 45% at 82% 8%, rgb(54 61 117 / 0.45), transparent 70%),
+    radial-gradient(45% 40% at 12% 0%, rgb(85 156 173 / 0.18), transparent 65%),
+    linear-gradient(to bottom, #0a0a0a, #05060c);
+}
+
+.page-backdrop__grid {
+  background-image:
+    linear-gradient(to right, rgb(27 31 59 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(27 31 59 / 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.dark .page-backdrop__grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
 }

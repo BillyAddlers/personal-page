@@ -6,12 +6,32 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "predev": "bun scripts/optimize-images.ts",
+    "prebuild": "bun scripts/optimize-images.ts",
+    "optimize:images": "bun scripts/optimize-images.ts",
+    "assets:regen": "bun scripts/optimize-images.ts",
+    "assets:test": "bun scripts/test-assets.ts",
+    "deploy": "bun run build && wrangler pages deploy out",
+    "preview": "bun run build && wrangler pages dev out"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@next/mdx": "^16.4.2",
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/mdx": "^2.0.14",
+    "animejs": "^4.5.0",
+    "iconoir-react": "^7.12.1",
+    "lucide-react": "^1.60.0",
+    "motion": "^14.4.0",
     "next": "16.4.2",
+    "next-themes": "^0.4.6",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "react-icons": "^5.7.0",
+    "react-simple-typewriter": "^5.0.1",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^6.0.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
@@ -20,8 +40,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "postcss": "^8.5.31",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.151.3"
   },
   "packageManager": "bun@1.4.3",
   "ignoreScripts": [
