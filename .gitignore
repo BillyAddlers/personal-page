@@ -46,3 +46,6 @@ next-env.d.ts
 # image optimization manifest
 /.cache/
 
+
+# wrangler local state
+.wrangler/
