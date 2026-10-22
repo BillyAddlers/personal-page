@@ -11,9 +11,7 @@
     "prebuild": "bun scripts/optimize-images.ts",
     "optimize:images": "bun scripts/optimize-images.ts",
     "assets:regen": "bun scripts/optimize-images.ts",
-    "assets:test": "bun scripts/test-assets.ts",
-    "deploy": "bun run build && wrangler pages deploy out",
-    "preview": "bun run build && wrangler pages dev out"
+    "assets:test": "bun scripts/test-assets.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -42,8 +40,7 @@
     "eslint-config-next": "16.4.2",
     "postcss": "^8.5.31",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.151.3"
+    "typescript": "^5"
   },
   "packageManager": "bun@1.4.3",
   "ignoreScripts": [
